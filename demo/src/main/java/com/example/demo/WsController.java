@@ -1,25 +1,29 @@
 package com.example.demo;
 
+import java.net.URI;
+import java.time.Duration;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.socket.WebSocketMessage;
+import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
+import org.springframework.web.reactive.socket.client.WebSocketClient;
+
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/ws")
 public class WsController {
     @RequestMapping(value="/send", method= RequestMethod.GET)
     public void getHello() {
-    	final User user = new User();
-        user.setId("Test");
-    	final WebClient client = WebClient.create("ws://localhost:8080/echo");
-    	client.get();
-//    	final Mono<User> createdUser = client.get()
-//                .uri("")
-//                .accept(MediaType.APPLICATION_JSON)
-//                .exchange()
-//                .flatMap(response -> response.bodyToMono(User.class));
-//        System.out.println(createdUser.block());
+    	final WebSocketClient client = new ReactorNettyWebSocketClient();
+        client.execute(URI.create("ws://localhost:8080/echo"), session ->
+                session.send(Flux.just(session.textMessage("Hello")))
+                        .thenMany(session.receive().take(1).map(WebSocketMessage::getPayloadAsText))
+                        .doOnNext(System.out::println)
+                        .then())
+                .block(Duration.ofMillis(5000));
       
     }
 }
