@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 public class EchoHandler implements WebSocketHandler {
     @Override
     public Mono<Void> handle(final WebSocketSession session) {
+    	System.out.println("Echo Handle");
         return session.send(
                 session.receive()
                         .map(msg -> session.textMessage("ECHO TEST -> " + msg.getPayloadAsText())));
