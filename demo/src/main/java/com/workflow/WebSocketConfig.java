@@ -1,3 +1,4 @@
+package com.workflow;
 //package com.example.demo;
 //
 //import org.springframework.context.annotation.Configuration;

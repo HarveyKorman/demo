@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.workflow;
 
 import java.net.URI;
 import java.time.Duration;

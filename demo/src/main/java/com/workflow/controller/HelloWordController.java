@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.workflow.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,18 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.workflow.User;
+import com.workflow.service.UserService;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController()
 @RequestMapping("/user")
-public class HelloWord {
-    private final UserService userService;
-    
-    @Autowired
-    public HelloWord(final UserService userService) {
-        this.userService = userService;
-    }
+public class HelloWordController {
+	@Autowired
+    private UserService userService;
     
 //    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
 //    @ExceptionHandler(ResourceNotFoundException.class)
@@ -57,6 +56,10 @@ public class HelloWord {
     
   @RequestMapping(value="/hello", method= RequestMethod.GET)
   public Mono<String> getHello() {
+	  User user = new User();
+	  user.setUserId(new Integer("1"));
+	  
+	this.userService.createOrUpdate(user);
     return Mono.just("Hello World123");
     
   }
