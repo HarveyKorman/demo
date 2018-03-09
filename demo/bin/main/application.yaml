@@ -1,0 +1,18 @@
+workflow_name: 'sample'
+first_step: 'apply'
+
+apply: 
+  required_role: null
+  action:
+    - 'createApplication'
+  previous: null
+  next: 
+    - 'accept'
+    - 'deny'
+accept:
+  required_role: 'GROUP_LEAD'
+  action:
+    - 'validateApplication'
+    - 'acceptApplication'
+  previous: 'apply'
+  next: null

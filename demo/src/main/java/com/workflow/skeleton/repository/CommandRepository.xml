@@ -85,4 +85,16 @@
       phone = #{phone,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+  
+    <insert id="insertCommand" parameterType="com.workflow.skeleton.entity.WorkflowDefinitionEntity">
+        INSERT INTO WF_DEFINITION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            NAME,
+            DEFINITION
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{name,jdbcType=VARCHAR},
+            #{definition, javaType=Object,jdbcType=OTHER, typeHandler=com.workflow.skeleton.utils.mybatis.handler.JsonTypeHandler}
+        </trim>
+    </insert>
 </mapper>
