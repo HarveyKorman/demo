@@ -11,7 +11,7 @@ import java.net.URLEncoder;
 
 import com.google.gson.JsonObject;
 
-public class WorkflowApi {
+public class WorkflowController {
 
 	private static final String POST = "POST";
 	private static final String PAYLOAD = "payload=";
@@ -21,19 +21,19 @@ public class WorkflowApi {
 	private final int timeout;
 	private final Proxy proxy;
 
-	public WorkflowApi(String service) {
+	public WorkflowController(String service) {
 		this(service, 5000);
 	}
 
-	public WorkflowApi(String service, Proxy proxy) {
+	public WorkflowController(String service, Proxy proxy) {
 		this(service, 5000, proxy);
 	}
 
-	public WorkflowApi(String service, int timeout) {
+	public WorkflowController(String service, int timeout) {
 		this(service, timeout, Proxy.NO_PROXY);
 	}
 
-	public WorkflowApi(String service, int timeout, Proxy proxy) {
+	public WorkflowController(String service, int timeout, Proxy proxy) {
 
 		this.timeout = timeout;
 
